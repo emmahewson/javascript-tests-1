@@ -79,6 +79,13 @@ function clearBoxes() {
     }
 }
 
+function changeElements() {
+    let form = document.getElementById("stats-form");
+    form.style.display = 'none';
+    let openingText = document.getElementById("opening-text");
+    openingText.innerHTML = "<p>How do you compare?</p>";
+}
+
 function capitalise(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
@@ -119,5 +126,8 @@ function handleSubmit(event) {
     document.getElementById("results-user").appendChild(userResultsTable);
 
     clearBoxes();
+    changeElements();
+    
+
 
 }
