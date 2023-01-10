@@ -1,6 +1,6 @@
 let members = [{
         name: 'John',
-        age: '56',
+        age: 56,
         scores: {
             darts: 125,
             snooker: 34,
@@ -9,7 +9,7 @@ let members = [{
     },
     {
         name: 'Mary',
-        age: '21',
+        age: 21,
         scores: {
             darts: 96,
             snooker: 147,
@@ -18,7 +18,7 @@ let members = [{
     },
     {
         name: 'Barb',
-        age: '73',
+        age: 73,
         scores: {
             darts: 180,
             snooker: 130,
@@ -27,7 +27,7 @@ let members = [{
     },
     {
         name: 'Murray',
-        age: '102',
+        age: 102,
         scores: {
             darts: 126,
             snooker: 98,
@@ -36,7 +36,7 @@ let members = [{
     },
     {
         name: 'Ceinwen',
-        age: '13',
+        age: 13,
         scores: {
             darts: 180,
             snooker: 147,
@@ -45,7 +45,7 @@ let members = [{
     },
     {
         name: 'Andrew',
-        age: '43',
+        age: 43,
         scores: {
             darts: 34,
             snooker: 45,
@@ -54,7 +54,7 @@ let members = [{
     },
     {
         name: 'Makka',
-        age: '56',
+        age: 56,
         scores: {
             darts: 78,
             snooker: 129,
@@ -63,7 +63,7 @@ let members = [{
     },
     {
         name: 'Newt',
-        age: '65',
+        age: 65,
         scores: {
             darts: 35,
             snooker: 102,
@@ -72,27 +72,13 @@ let members = [{
     }
 ];
 
-function clearBoxes() {
-    let answerBoxes = document.getElementsByClassName("answer-box");
-    for (let answerBox of answerBoxes) {
-        answerBox.value = "";
-    }
-}
-
-function changeElements() {
-    let form = document.getElementById("stats-form");
-    form.style.display = 'none';
-    let openingText = document.getElementById("opening-text");
-    openingText.innerHTML = "<p>How do you compare?</p>";
-}
 
 function capitalise(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-function handleSubmit(event) {
-    event.preventDefault();
 
+function userResultsTable() {
     let name = document.getElementById('name');
     let age = document.getElementById('age');
     let darts = document.getElementById('darts');
@@ -104,30 +90,120 @@ function handleSubmit(event) {
     let userTableHtml = `
     <thead>
         <tr>
-            <td>${capitalise(name.name)}</td>
-            <td>${capitalise(age.name)}</td>
-            <td>${capitalise(darts.name)}</td>
-            <td>${capitalise(snooker.name)}</td>
-            <td>${capitalise(bridge.name)}</td>
+            <th>${capitalise(name.name)}</th>
+            <th>${capitalise(age.name)}</th>
+            <th>${capitalise(darts.name)}</th>
+            <th>${capitalise(snooker.name)}</th>
+            <th>${capitalise(bridge.name)}</th>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td>${name.value}</td>
-            <td>${age.value}</td>
-            <td>${darts.value}</td>
-            <td>${snooker.value}</td>
-            <td>${bridge.value}</td>
+            <td id="user-name">${name.value}</td>
+            <td id="user-age">${age.value}</td>
+            <td id="user-darts">${darts.value}</td>
+            <td id="user-snooker">${snooker.value}</td>
+            <td id="user-bridge">${bridge.value}</td>
         </tr>
     </tbody>
     `
-
     userResultsTable.innerHTML = userTableHtml;
     document.getElementById("results-user").appendChild(userResultsTable);
+}
 
+
+function createMemberResultsTable() {
+
+    let html = `
+        <h2>Other Members' Results</h2>
+        <table>
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Darts</th>
+            <th>Snooker</th>
+            <th>Bridge</th>
+        </tr>
+        </thead>
+        <tbody>
+`;
+
+    for (i of members) {
+        let rowHtml = `
+            <tr>
+                <td>${i.name}</td>
+                <td>${i.age}</td>
+                <td>${i.scores.darts}</td>
+                <td>${i.scores.snooker}</td>
+                <td>${i.scores.bridge}</td>
+            </tr>
+    `;
+        html += rowHtml;
+    }
+    html += `
+    </tbody>
+  </table>
+  `;
+
+    document.getElementById('results-others').innerHTML = html;
+
+}
+
+
+function clearBoxes() {
+    let answerBoxes = document.getElementsByClassName("answer-box");
+    for (let answerBox of answerBoxes) {
+        answerBox.value = "";
+    }
+}
+
+
+function changeElements() {
+    let form = document.getElementById("stats-form");
+    form.style.display = 'none';
+    let openingText = document.getElementById("opening-text");
+    openingText.innerHTML = "<p>How do you compare?</p>";
+}
+
+
+function handleSubmit(event) {
+    event.preventDefault();
+    userResultsTable();
+    createMemberResultsTable();
     clearBoxes();
     changeElements();
-    
+}
+
+function compareMaster(arr, num) {
+    let totalNum = 0;
+    let noOfMembers = 0;
+
+    for(let member of arr) {
+        totalNum += member[num];
+        noOfMembers++;
+    }
+    return Math.floor(totalNum / noOfMembers);
+}
+
+function compareAge() {
+    let averageAge = compareMaster(members, 'age');
+    let ageCompareText = document.getElementById("age-compare-text");
+    let userAge = document.getElementById('user-age').textContent;
+    let ageComparison = "";
+    if (userAge > averageAge) {
+        ageComparison = "You are " + (userAge - averageAge) + " years older than the average :-(";
+    } else if (userAge < averageAge) {
+        ageComparison = "You are " + (averageAge - userAge) + " years younger than average!";
+    } else if (userAge === averageAge) {
+        ageComparison = "You are exactly the average age!";
+    };
+
+    ageCompareText.innerHTML = `
+        <p>The average age is ${averageAge}</p>
+        <p>Your age is ${userAge}</p>
+        <p>${ageComparison}</p>`
 
 
 }
+

@@ -11,7 +11,7 @@
 
 <body>
     <h1>Statistics</h1>
-    <p id="opening-text">Fill in the form to see how you compare!</p>
+    <h2 id="opening-text">Fill in the form to see how you compare!</h2>
     
     <form id="stats-form" method="POST" action="" onsubmit="handleSubmit(event)">
         <div class="name">
@@ -43,12 +43,14 @@
         <div id="results-user"></div>
 
         <div class="compare-div">
-            <button onclick="compareAge">Compare Age</button>
+            <p id="age-compare-text"></p>
+            <button onclick="compareAge()">Compare Age</button>
             <button onclick="compareDarts">Compare Darts Score</button>
             <button onclick="compareSnooker">Compare Snooker Score</button>
             <button onclick="compareBridge">Compare Bridge Score</button>
         </div>
-        <div id="results-others"></div>
+        <div id="results-others">
+        </div>
     </div>
 
     <script src="assets/js/script.js"></script>
