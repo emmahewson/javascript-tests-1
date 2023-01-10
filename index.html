@@ -1,14 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="assets/css/style.css">
-    <title>Running Stats</title>
+    <title>Stats</title>
 </head>
+
 <body>
-    
+    <h1>Statistics</h1>
+    <p>Fill in the form to see how you compare!</p>
+
+    <form id="stats-form" method="POST" action="" onsubmit="handleSubmit(event)">
+        <div class="name">
+            <label for="name">Name: </label>
+            <input type="text" id="name" name="name" class="answer-box">
+        </div>
+        <div class="age">
+            <label for="age">Age: </label>
+            <input type="number" id="age" name="age" class="answer-box">
+        </div>
+        <h2>Best Scores</h2>
+        <div class="darts">
+            <label for="darts">Best score in darts: </label>
+            <input type="number" id="darts" name="darts" max="180" min="0" class="answer-box">
+        </div>
+        <div class="snooker">
+            <label for="snooker">Best score in snooker: </label>
+            <input type="number" id="snooker" name="snooker" max="147" min="0" class="answer-box">
+        </div>
+        <div class="bridge">
+            <label for="snooker">Best score in bridge: </label>
+            <input type="number" id="bridge" name="bridge" max="3160" min="0" class="answer-box">
+        </div>
+        <input type="submit" value="Submit">
+    </form>
+
+    <div id="resultsDiv">
+
+        <div id="results-user"></div>
+
+        <div class="compare-div">
+            <button onclick="compareAge">Compare Age</button>
+            <button onclick="compareDarts">Compare Darts Score</button>
+            <button onclick="compareSnooker">Compare Snooker Score</button>
+            <button onclick="compareBridge">Compare Bridge Score</button>
+        </div>
+        <div id="results-others"></div>
+    </div>
+
     <script src="assets/js/script.js"></script>
 </body>
+
 </html>
